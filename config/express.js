@@ -4,6 +4,7 @@ compress = require('compression'),
 bodyParser = require('body-parser'),
 methodOverride = require('method-override');
 var session = require('express-session');
+var passport = require('passport');
 var config = require('../config/env/development');
 var uri = 'mongodb://localhost/mean-book';
 var db =  require('mongoose').connect(uri);
@@ -28,6 +29,8 @@ module.exports = function(){
     }));
     app.set('views', './app/views');
     app.set('view engine', 'ejs');
+    app.use(passport.initialize());
+    app.use(passport.session());
     require('../app/routes/index.server.routes.js')(app);
     require('../app/routes/users.server.routes.js')(app);
     app.use(express.static('./public'));
